@@ -306,8 +306,8 @@ switch (ENVIRONMENT)
 	define('VIEWPATH', $view_folder.DIRECTORY_SEPARATOR);
 
 
-define('LEVEL_ERROR', 'error');
-define('LEVEL_ERROR', 'info');
+    define('LEVEL_ERROR', 'error');
+    define('LEVEL_info', 'info');
 /*
  * --------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE

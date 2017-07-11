@@ -23,7 +23,7 @@ class MY_Controller extends CI_Controller
     {
         $beginTime = microtime(true);
         $uri = uri_string();
-        $transport = new MApiTFrameTransport(new TPhpStream(TPhpStream::MODE_R | TPhpStream::MODE_W));
+        $transport = new TFramedTransport(new TPhpStream(TPhpStream::MODE_R | TPhpStream::MODE_W));
 //        $protocal = new TBinaryProtocol($transport);
         $protocal = new TJSONProtocol($transport);
 

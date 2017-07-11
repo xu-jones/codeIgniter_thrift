@@ -401,6 +401,14 @@ if ( ! is_php('5.4'))
 	$e404 = FALSE;
 	$class = ucfirst($RTR->class);
 	$method = $RTR->method;
+    log_message('error', json_encode($RTR));
+    // 初始化thriftClassLoader
+    require_once APPPATH . '/libraries/Thrift/ClassLoader/ThriftClassLoader.php';
+    $thriftLoader = new Thrift\ClassLoader\ThriftClassLoader();
+    $thriftLoader->registerNamespace('Thrift', APPPATH . '/libraries/');
+    $thriftLoader->register();
+    $GEN_DIR = FCPATH .'/idl/gen-php';
+    $thriftLoader->registerDefinition('service', $GEN_DIR);
 
 	if (empty($class) OR ! file_exists(APPPATH.'controllers/'.$RTR->directory.$class.'.php'))
 	{
@@ -408,14 +416,6 @@ if ( ! is_php('5.4'))
 	}
 	else
 	{
-	    // 初始化thriftClassLoader
-        require_once APPPATH . '/libraries/Thrift/ClassLoader/ThriftClassLoader.php';
-        $thriftLoader = new Thrift\ClassLoader\ThriftClassLoader();
-        $thriftLoader->registerNamespace('Thrift', APPPATH . '/libraries/');
-        $thriftLoader->register();
-        $GEN_DIR = FCPATH .'/idl/gen-php';
-        $thriftLoader->registerDefinition('service', $GEN_DIR);
-
 		require_once(APPPATH.'controllers/'.$RTR->directory.$class.'.php');
 
 		if ( ! class_exists($class, FALSE) OR $method[0] === '_' OR method_exists('CI_Controller', $method))

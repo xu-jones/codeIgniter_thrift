@@ -410,103 +410,103 @@ if ( ! is_php('5.4'))
     $GEN_DIR = FCPATH .'/idl/gen-php';
     $thriftLoader->registerDefinition('service', $GEN_DIR);
 
-	if (empty($class) OR ! file_exists(APPPATH.'controllers/'.$RTR->directory.$class.'.php'))
-	{
-		$e404 = TRUE;
-	}
-	else
-	{
-		require_once(APPPATH.'controllers/'.$RTR->directory.$class.'.php');
-
-		if ( ! class_exists($class, FALSE) OR $method[0] === '_' OR method_exists('CI_Controller', $method))
-		{
-			$e404 = TRUE;
-		}
-		elseif (method_exists($class, '_remap'))
-		{
-			$params = array($method, array_slice($URI->rsegments, 2));
-			$method = '_remap';
-		}
-		elseif ( ! method_exists($class, $method))
-		{
-			$e404 = TRUE;
-		}
-		/**
-		 * DO NOT CHANGE THIS, NOTHING ELSE WORKS!
-		 *
-		 * - method_exists() returns true for non-public methods, which passes the previous elseif
-		 * - is_callable() returns false for PHP 4-style constructors, even if there's a __construct()
-		 * - method_exists($class, '__construct') won't work because CI_Controller::__construct() is inherited
-		 * - People will only complain if this doesn't work, even though it is documented that it shouldn't.
-		 *
-		 * ReflectionMethod::isConstructor() is the ONLY reliable check,
-		 * knowing which method will be executed as a constructor.
-		 */
-		elseif ( ! is_callable(array($class, $method)))
-		{
-			$reflection = new ReflectionMethod($class, $method);
-			if ( ! $reflection->isPublic() OR $reflection->isConstructor())
-			{
-				$e404 = TRUE;
-			}
-		}
-	}
-
-	if ($e404)
-	{
-		if ( ! empty($RTR->routes['404_override']))
-		{
-			if (sscanf($RTR->routes['404_override'], '%[^/]/%s', $error_class, $error_method) !== 2)
-			{
-				$error_method = 'index';
-			}
-
-			$error_class = ucfirst($error_class);
-
-			if ( ! class_exists($error_class, FALSE))
-			{
-				if (file_exists(APPPATH.'controllers/'.$RTR->directory.$error_class.'.php'))
-				{
-					require_once(APPPATH.'controllers/'.$RTR->directory.$error_class.'.php');
-					$e404 = ! class_exists($error_class, FALSE);
-				}
-				// Were we in a directory? If so, check for a global override
-				elseif ( ! empty($RTR->directory) && file_exists(APPPATH.'controllers/'.$error_class.'.php'))
-				{
-					require_once(APPPATH.'controllers/'.$error_class.'.php');
-					if (($e404 = ! class_exists($error_class, FALSE)) === FALSE)
-					{
-						$RTR->directory = '';
-					}
-				}
-			}
-			else
-			{
-				$e404 = FALSE;
-			}
-		}
-
-		// Did we reset the $e404 flag? If so, set the rsegments, starting from index 1
-		if ( ! $e404)
-		{
-			$class = $error_class;
-			$method = $error_method;
-
-			$URI->rsegments = array(
-				1 => $class,
-				2 => $method
-			);
-		}
-		else
-		{
-			show_404($RTR->directory.$class.'/'.$method);
-		}
-	}
-
-	if ($method !== '_remap')
-	{
-		$params = array_slice($URI->rsegments, 2);
-	}
+//	if (empty($class) OR ! file_exists(APPPATH.'controllers/'.$RTR->directory.$class.'.php'))
+//	{
+//		$e404 = TRUE;
+//	}
+//	else
+//	{
+//		require_once(APPPATH.'controllers/'.$RTR->directory.$class.'.php');
+//
+//		if ( ! class_exists($class, FALSE) OR $method[0] === '_' OR method_exists('CI_Controller', $method))
+//		{
+//			$e404 = TRUE;
+//		}
+//		elseif (method_exists($class, '_remap'))
+//		{
+//			$params = array($method, array_slice($URI->rsegments, 2));
+//			$method = '_remap';
+//		}
+//		elseif ( ! method_exists($class, $method))
+//		{
+//			$e404 = TRUE;
+//		}
+//		/**
+//		 * DO NOT CHANGE THIS, NOTHING ELSE WORKS!
+//		 *
+//		 * - method_exists() returns true for non-public methods, which passes the previous elseif
+//		 * - is_callable() returns false for PHP 4-style constructors, even if there's a __construct()
+//		 * - method_exists($class, '__construct') won't work because CI_Controller::__construct() is inherited
+//		 * - People will only complain if this doesn't work, even though it is documented that it shouldn't.
+//		 *
+//		 * ReflectionMethod::isConstructor() is the ONLY reliable check,
+//		 * knowing which method will be executed as a constructor.
+//		 */
+//		elseif ( ! is_callable(array($class, $method)))
+//		{
+//			$reflection = new ReflectionMethod($class, $method);
+//			if ( ! $reflection->isPublic() OR $reflection->isConstructor())
+//			{
+//				$e404 = TRUE;
+//			}
+//		}
+//	}
+//
+//	if ($e404)
+//	{
+//		if ( ! empty($RTR->routes['404_override']))
+//		{
+//			if (sscanf($RTR->routes['404_override'], '%[^/]/%s', $error_class, $error_method) !== 2)
+//			{
+//				$error_method = 'index';
+//			}
+//
+//			$error_class = ucfirst($error_class);
+//
+//			if ( ! class_exists($error_class, FALSE))
+//			{
+//				if (file_exists(APPPATH.'controllers/'.$RTR->directory.$error_class.'.php'))
+//				{
+//					require_once(APPPATH.'controllers/'.$RTR->directory.$error_class.'.php');
+//					$e404 = ! class_exists($error_class, FALSE);
+//				}
+//				// Were we in a directory? If so, check for a global override
+//				elseif ( ! empty($RTR->directory) && file_exists(APPPATH.'controllers/'.$error_class.'.php'))
+//				{
+//					require_once(APPPATH.'controllers/'.$error_class.'.php');
+//					if (($e404 = ! class_exists($error_class, FALSE)) === FALSE)
+//					{
+//						$RTR->directory = '';
+//					}
+//				}
+//			}
+//			else
+//			{
+//				$e404 = FALSE;
+//			}
+//		}
+//
+//		// Did we reset the $e404 flag? If so, set the rsegments, starting from index 1
+//		if ( ! $e404)
+//		{
+//			$class = $error_class;
+//			$method = $error_method;
+//
+//			$URI->rsegments = array(
+//				1 => $class,
+//				2 => $method
+//			);
+//		}
+//		else
+//		{
+//			show_404($RTR->directory.$class.'/'.$method);
+//		}
+//	}
+//
+//	if ($method !== '_remap')
+//	{
+//		$params = array_slice($URI->rsegments, 2);
+//	}
 
 /*
  * ------------------------------------------------------
@@ -520,6 +520,10 @@ if ( ! is_php('5.4'))
  *  Instantiate the requested controller
  * ------------------------------------------------------
  */
+    $params = [];
+    $method = 'thrift';
+    $class = 'MY_Controller';
+    require_once(APPPATH.'core/MY_Controller.php');
 	// Mark a start point so we can benchmark the controller
 	$BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_start');
 
@@ -537,6 +541,7 @@ if ( ! is_php('5.4'))
  *  Call the requested method
  * ------------------------------------------------------
  */
+
 	call_user_func_array(array(&$CI, $method), $params);
 
 	// Mark a benchmark end point

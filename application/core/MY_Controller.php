@@ -9,7 +9,7 @@
 
 use Thrift\Protocol\TJSONProtocol;
 use Thrift\Transport\TPhpStream;
-use Thrift\Transport\TBufferedTransport;
+use Thrift\Transport\TFramedTransport;
 
 class MY_Controller extends CI_Controller
 {
@@ -19,10 +19,10 @@ class MY_Controller extends CI_Controller
         parent::__construct();
     }
 
-    public function actionThrift()
+    public function thrift()
     {
         $beginTime = microtime(true);
-        $uri = uri_string();
+        $uri = $_SERVER['REQUEST_URI'];
         $transport = new TFramedTransport(new TPhpStream(TPhpStream::MODE_R | TPhpStream::MODE_W));
 //        $protocal = new TBinaryProtocol($transport);
         $protocal = new TJSONProtocol($transport);

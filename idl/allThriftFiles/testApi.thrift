@@ -1,8 +1,8 @@
-include "base.thrift"
-include "test.thrift"
+
 namespace php service.test
 
-
+include "base.thrift"
+include "test.thrift"
 
 service TestAPI
 {

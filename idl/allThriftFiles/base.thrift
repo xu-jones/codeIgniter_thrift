@@ -1,4 +1,4 @@
-namespace php test.base
+namespace php service.base
 
 enum AppId
 {

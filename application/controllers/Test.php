@@ -1,7 +1,7 @@
 <?php
 
 
-class test extends MY_Controller implements \service\test\testAPIIf {
+class Test extends MY_Controller implements \service\test\testAPIIf {
 
     protected $processName = '\service\test\testAPIProcessor';
 

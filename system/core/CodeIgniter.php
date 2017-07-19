@@ -410,7 +410,7 @@ $loader->registerDefinition('service', $GEN_DIR);
 $loader->register();
 
 	$e404 = FALSE;
-	$class = $RTR->class;
+	$class = ucfirst($RTR->class);
 	$method = $RTR->method;
     require_once(APPPATH.'controllers/'.$RTR->directory.$class.'.php');
 //	if (empty($class) OR ! file_exists(APPPATH.'controllers/'.$RTR->directory.$class.'.php'))

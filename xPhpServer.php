@@ -15,13 +15,13 @@ use Thrift\Protocol\TBinaryProtocol;
 use Thrift\Transport\TPhpStream;
 use Thrift\Transport\TBufferedTransport;
 
-class testHandler implements \service\test\TestAPIIf  {
+class xHandler implements \service\x\xAPIIf   {
 
 
-    public function testInfo(\service\test\TestReq $req)
+    public function xInfo(\service\x\xReq $req)
     {
-        $resp = new \service\test\testResp();
-        $resp->age = 31113;
+        $resp = new \service\x\xResp();
+        $resp->age = 123;
         return $resp;
     }
 
@@ -30,8 +30,8 @@ class testHandler implements \service\test\TestAPIIf  {
 
 header('Content-Type', 'application/x-thrift');
 
-$handler = new testHandler();
-$processor = new \service\test\testAPIProcessor($handler);
+$handler = new xHandler();
+$processor = new \service\x\xAPIProcessor($handler);
 
 $transport = new TBufferedTransport(new TPhpStream(TPhpStream::MODE_R | TPhpStream::MODE_W));
 $protocol = new TBinaryProtocol($transport, true, true);

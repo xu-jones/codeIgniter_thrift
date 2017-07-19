@@ -398,18 +398,21 @@ if ( ! is_php('5.4'))
  *  controller methods that begin with an underscore.
  */
 
-	$e404 = FALSE;
-	$class = ucfirst($RTR->class);
-	$method = $RTR->method;
-    log_message('error', json_encode($RTR));
-    // 初始化thriftClassLoader
-    require_once APPPATH . '/libraries/Thrift/ClassLoader/ThriftClassLoader.php';
-    $thriftLoader = new Thrift\ClassLoader\ThriftClassLoader();
-    $thriftLoader->registerNamespace('Thrift', APPPATH . '/libraries/');
-    $thriftLoader->register();
-    $GEN_DIR = FCPATH .'/idl/gen-php';
-    $thriftLoader->registerDefinition('service', $GEN_DIR);
+require_once APPPATH.'/libraries/Thrift/ClassLoader/ThriftClassLoader.php';
 
+use Thrift\ClassLoader\ThriftClassLoader;
+
+$GEN_DIR = './idl/gen-php';
+
+$loader = new ThriftClassLoader();
+$loader->registerNamespace('Thrift', APPPATH . '/libraries');
+$loader->registerDefinition('service', $GEN_DIR);
+$loader->register();
+
+	$e404 = FALSE;
+	$class = $RTR->class;
+	$method = $RTR->method;
+    require_once(APPPATH.'controllers/'.$RTR->directory.$class.'.php');
 //	if (empty($class) OR ! file_exists(APPPATH.'controllers/'.$RTR->directory.$class.'.php'))
 //	{
 //		$e404 = TRUE;
@@ -520,10 +523,6 @@ if ( ! is_php('5.4'))
  *  Instantiate the requested controller
  * ------------------------------------------------------
  */
-    $params = [];
-    $method = 'thrift';
-    $class = 'MY_Controller';
-    require_once(APPPATH.'core/MY_Controller.php');
 	// Mark a start point so we can benchmark the controller
 	$BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_start');
 
@@ -541,8 +540,7 @@ if ( ! is_php('5.4'))
  *  Call the requested method
  * ------------------------------------------------------
  */
-
-	call_user_func_array(array(&$CI, $method), $params);
+	call_user_func_array(array(&$CI, 'thrift'), []);
 
 	// Mark a benchmark end point
 	$BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_end');

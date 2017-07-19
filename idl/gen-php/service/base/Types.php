@@ -17,7 +17,7 @@ use Thrift\Protocol\TBinaryProtocolAccelerated;
 use Thrift\Exception\TApplicationException;
 
 
-final class AppId {
+final class appId {
   const ANDROID = 1;
   const IOS = 2;
   static public $__names = array(
@@ -26,7 +26,7 @@ final class AppId {
   );
 }
 
-class TestReqHead {
+class baseReqHeader {
   static $_TSPEC;
 
   public $skey = null;
@@ -120,7 +120,7 @@ class TestReqHead {
   }
 
   public function getName() {
-    return 'TestReqHead';
+    return 'baseReqHeader';
   }
 
   public function read($input)
@@ -220,7 +220,7 @@ class TestReqHead {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('TestReqHead');
+    $xfer += $output->writeStructBegin('baseReqHeader');
     if ($this->skey !== null) {
       $xfer += $output->writeFieldBegin('skey', TType::STRING, 1);
       $xfer += $output->writeString($this->skey);
@@ -278,7 +278,7 @@ class TestReqHead {
 
 }
 
-class Cookie {
+class cookie {
   static $_TSPEC;
 
   public $name = null;
@@ -332,7 +332,7 @@ class Cookie {
   }
 
   public function getName() {
-    return 'Cookie';
+    return 'cookie';
   }
 
   public function read($input)
@@ -397,7 +397,7 @@ class Cookie {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('Cookie');
+    $xfer += $output->writeStructBegin('cookie');
     if ($this->name !== null) {
       $xfer += $output->writeFieldBegin('name', TType::STRING, 1);
       $xfer += $output->writeString($this->name);
@@ -430,7 +430,7 @@ class Cookie {
 
 }
 
-class TestRespHead {
+class baseRespHeader {
   static $_TSPEC;
 
   public $time = null;
@@ -464,7 +464,7 @@ class TestRespHead {
           'etype' => TType::STRUCT,
           'elem' => array(
             'type' => TType::STRUCT,
-            'class' => '\service\base\Cookie',
+            'class' => '\service\base\cookie',
             ),
           ),
         );
@@ -489,7 +489,7 @@ class TestRespHead {
   }
 
   public function getName() {
-    return 'TestRespHead';
+    return 'baseRespHeader';
   }
 
   public function read($input)
@@ -544,7 +544,7 @@ class TestRespHead {
             for ($_i4 = 0; $_i4 < $_size0; ++$_i4)
             {
               $elem5 = null;
-              $elem5 = new \service\base\Cookie();
+              $elem5 = new \service\base\cookie();
               $xfer += $elem5->read($input);
               $this->cookie []= $elem5;
             }
@@ -565,7 +565,7 @@ class TestRespHead {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('TestRespHead');
+    $xfer += $output->writeStructBegin('baseRespHeader');
     if ($this->time !== null) {
       $xfer += $output->writeFieldBegin('time', TType::I64, 1);
       $xfer += $output->writeI64($this->time);
@@ -610,10 +610,10 @@ class TestRespHead {
 
 }
 
-class TestException extends TException {
+class baseException extends TException {
   static $_TSPEC;
 
-  public $head = null;
+  public $header = null;
   public $retCode = null;
   public $retMsg = null;
 
@@ -621,9 +621,9 @@ class TestException extends TException {
     if (!isset(self::$_TSPEC)) {
       self::$_TSPEC = array(
         1 => array(
-          'var' => 'head',
+          'var' => 'header',
           'type' => TType::STRUCT,
-          'class' => '\service\base\TestRespHead',
+          'class' => '\service\base\baseRespHeader',
           ),
         2 => array(
           'var' => 'retCode',
@@ -636,8 +636,8 @@ class TestException extends TException {
         );
     }
     if (is_array($vals)) {
-      if (isset($vals['head'])) {
-        $this->head = $vals['head'];
+      if (isset($vals['header'])) {
+        $this->header = $vals['header'];
       }
       if (isset($vals['retCode'])) {
         $this->retCode = $vals['retCode'];
@@ -649,7 +649,7 @@ class TestException extends TException {
   }
 
   public function getName() {
-    return 'TestException';
+    return 'baseException';
   }
 
   public function read($input)
@@ -669,8 +669,8 @@ class TestException extends TException {
       {
         case 1:
           if ($ftype == TType::STRUCT) {
-            $this->head = new \service\base\TestRespHead();
-            $xfer += $this->head->read($input);
+            $this->header = new \service\base\baseRespHeader();
+            $xfer += $this->header->read($input);
           } else {
             $xfer += $input->skip($ftype);
           }
@@ -701,13 +701,13 @@ class TestException extends TException {
 
   public function write($output) {
     $xfer = 0;
-    $xfer += $output->writeStructBegin('TestException');
-    if ($this->head !== null) {
-      if (!is_object($this->head)) {
+    $xfer += $output->writeStructBegin('baseException');
+    if ($this->header !== null) {
+      if (!is_object($this->header)) {
         throw new TProtocolException('Bad type in structure.', TProtocolException::INVALID_DATA);
       }
-      $xfer += $output->writeFieldBegin('head', TType::STRUCT, 1);
-      $xfer += $this->head->write($output);
+      $xfer += $output->writeFieldBegin('header', TType::STRUCT, 1);
+      $xfer += $this->header->write($output);
       $xfer += $output->writeFieldEnd();
     }
     if ($this->retCode !== null) {

@@ -1,12 +1,12 @@
 namespace php service.base
 
-enum AppId
+enum appId
 {
 	ANDROID = 1,
 	IOS = 2,
 }
 
-struct TestReqHead
+struct baseReqHeader
 {
 	/** 会话标识，可选 */
 	1: string skey,
@@ -30,7 +30,7 @@ struct TestReqHead
 	10: string idfa,
 }
 
-struct Cookie
+struct cookie
 {
 	1:	string name,
 	2:	string value,
@@ -39,7 +39,7 @@ struct Cookie
 	5:	i32 expires,
 }
 
-struct TestRespHead
+struct baseRespHeader
 {
 	/** 服务器时间 */
 	1: i64 time,
@@ -50,13 +50,13 @@ struct TestRespHead
 	/** 生产唯一hash */
     4:  string contentHash,
     /** web View 需要的cookie */
-    5:	list<Cookie> cookie,
+    5:	list<cookie> cookie,
 }
 
 
-exception TestException
+exception baseException
 {
-	1: TestRespHead head,
+	1: baseRespHeader header,
 	/** 错误码 */
 	2: i32 retCode,
 	/** 错误信息 */

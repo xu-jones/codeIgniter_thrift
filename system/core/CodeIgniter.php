@@ -398,25 +398,28 @@ if ( ! is_php('5.4'))
  *  controller methods that begin with an underscore.
  */
 
-require_once APPPATH.'/libraries/Thrift/ClassLoader/ThriftClassLoader.php';
+    require_once APPPATH.'/libraries/Thrift/ClassLoader/ThriftClassLoader.php';
 
-use Thrift\ClassLoader\ThriftClassLoader;
+    use Thrift\ClassLoader\ThriftClassLoader;
 
-$GEN_DIR = './idl/gen-php';
+    $GEN_DIR = './idl/gen-php';
 
-$loader = new ThriftClassLoader();
-$loader->registerNamespace('Thrift', APPPATH . '/libraries');
-$loader->registerDefinition('service', $GEN_DIR);
-$loader->register();
+    $loader = new ThriftClassLoader();
+    $loader->registerNamespace('Thrift', APPPATH . '/libraries');
+    $loader->registerDefinition('service', $GEN_DIR);
+    $loader->register();
 
 	$e404 = FALSE;
 	$class = ucfirst($RTR->class);
 	$method = $RTR->method;
+
+    if (empty($class) OR ! file_exists(APPPATH.'controllers/'.$RTR->directory.$class.'.php'))
+    {
+        $e404 = TRUE;
+    }
+
     require_once(APPPATH.'controllers/'.$RTR->directory.$class.'.php');
-//	if (empty($class) OR ! file_exists(APPPATH.'controllers/'.$RTR->directory.$class.'.php'))
-//	{
-//		$e404 = TRUE;
-//	}
+
 //	else
 //	{
 //		require_once(APPPATH.'controllers/'.$RTR->directory.$class.'.php');

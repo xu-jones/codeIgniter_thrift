@@ -40,12 +40,12 @@ class MY_Controller extends CI_Controller
         }
         catch (\Thrift\Exception\TException $e)
         {
-            log_message(LOG_ERROR, 'catch process');
-            log_message(LOG_ERROR, " thrift exception code[{$e->getCode()}] msg[{$e->getMessage()}] trace[{$e->getTraceAsString()}]");
+            log_message(LOG_LEVEL_ERROR, 'catch process');
+            log_message(LOG_LEVEL_ERROR, " thrift exception code[{$e->getCode()}] msg[{$e->getMessage()}] trace[{$e->getTraceAsString()}]");
         }
         $processTime = round((microtime(true) - $beginTime) * 1000, 3);
         $len = strlen(file_get_contents("php://input"));
-        log_message(LOG_ERROR, "MY_Controller uri[{$uri}] len[{$len}] processTime[{$processTime}]");
+        log_message(LOG_LEVEL_INFO, "MY_Controller uri[{$uri}] len[{$len}] processTime[{$processTime}]");
         $transport->close();
     }
 

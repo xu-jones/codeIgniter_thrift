@@ -443,7 +443,9 @@ if ( ! function_exists('show_404'))
 }
 
 // ------------------------------------------------------------------------
-
+define('LOG_LEVEL_ERROR', 'error');
+define('LOG_LEVEL_INFO', 'info');
+define('LOG_LEVEL_DEBUG', 'debug');
 if ( ! function_exists('log_message'))
 {
 	/**
